@@ -31,7 +31,8 @@ Click any test → **Traces** tab → click the trace thumbnail. Explore:
    ```
 
 2. Run the suite with traces:
-   ```bash
+   ```
+   bash
    npx playwright test --trace on
    ```
 

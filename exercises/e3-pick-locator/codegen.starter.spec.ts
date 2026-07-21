@@ -16,18 +16,23 @@ const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
 
 test('service name link is visible on the users page', async ({ page }) => {
   await page.goto(`${BASE_URL}/users`);
+  const link = page.getByRole('link', { name: 'service-name' });
+  await expect(link).toBeVisible();
+});
 
+test('User Directory link navigates to the users page', async ({ page }) => {
+  await page.goto(`${BASE_URL}/users`);
   // TODO: paste the locator codegen generated for the "User Directory" nav link
-  const serviceLink = page.locator('TODO — paste codegen output here');
+  const serviceLink = page.getByRole('link', { name: 'User Directory' });
   await expect(serviceLink).toBeVisible();
+  await serviceLink.click();
 });
 
 test('Add User link navigates to the create form', async ({ page }) => {
   await page.goto(`${BASE_URL}/users`);
 
-  // TODO: paste the codegen locator for the "+ Add User" link, then click it
-  await page.locator('TODO').click();
-
+  // TODO: paste the codegen locator for the '+ Add User' nav link
+  await page.getByRole('link', { name: '+ Add User' }).click();
   await expect(page).toHaveURL(/\/users\/new/);
 });
 
@@ -35,16 +40,18 @@ test('Admin radio button filters the table', async ({ page }) => {
   await page.goto(`${BASE_URL}/users`);
 
   // TODO: paste the codegen locator for the Admin radio button, then click it
-  await page.locator('TODO').click();
+  await page.getByTestId('filter-admin').check();
+  const rows = page.locator('#users-tbody tr').filter({ visible: true });
 
   // TODO: assert only 1 row is visible after filtering
+  await expect(rows).toHaveCount(1);
 });
 
 test('LLM Generate Response button is visible', async ({ page }) => {
   await page.goto(`${BASE_URL}/llm`);
 
   // TODO: paste the codegen locator for the "Generate Response" button
-  const btn = page.locator('TODO');
+  const btn = page.getByTestId('ask-btn');
   await expect(btn).toBeVisible();
   await expect(btn).toBeEnabled();
 });

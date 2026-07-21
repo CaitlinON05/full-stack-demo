@@ -2,6 +2,8 @@ import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
   testDir: './tests',
+  fullyParallel: false,  // Tests must run serially because they share seed data
+  workers: 1,            // Run with single worker to avoid seed data conflicts
   reporter: [['html']],
   use: {
     baseURL: process.env.BASE_URL || 'http://localhost:3000',
