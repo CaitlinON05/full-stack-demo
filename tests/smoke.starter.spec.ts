@@ -58,7 +58,7 @@ test('API: GET /api/users returns an array of users @smoke', async ({ request })
   const res  = await request.get(`${BASE_URL}/api/users`);
 
   // TODO: assert status is 200
-  await expect(res.status()).toBe(201);
+  await expect(res.status()).toBe(200);
   // TODO: assert the body is an array with at least 1 user
   const body = await res.json();
   await expect(Array.isArray(body)).toBe(true);
